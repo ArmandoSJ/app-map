@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
           initialRoute: 'scroll', 
           routes: getApplicationRoutes(),
           theme: ThemeData(
-            primaryColor: Colors.black,
+            primaryColor: Colors.blue.shade100,
             floatingActionButtonTheme: FloatingActionButtonThemeData(
             backgroundColor: Colors.blue
             )

@@ -1,6 +1,8 @@
+
+
 import 'package:app_map/activities/main_activity.dart';
 import 'package:flutter/material.dart';
-
+import 'package:app_map/constants/constants.dart' as constants;
 
 class DisplayActivity extends StatelessWidget {
 
@@ -44,7 +46,7 @@ class Content extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(height: 20),
-          Text("¡Welcome to the application!", style: textStyle),
+          Text(constants.SCROLL_TITLE, style: textStyle),
           Expanded(child: Container( )),
           Icon(Icons.keyboard_arrow_down, size: 100, color: Colors.white)
         ],
