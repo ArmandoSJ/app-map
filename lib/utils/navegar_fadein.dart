@@ -1,6 +1,8 @@
 part of 'helpers.dart';
 
-
+/*
+ * Funcion para navegar de actividad de forma fade in 
+ */
 Route navegarMapaFadeIn( BuildContext context, Widget page ) {
 
   return PageRouteBuilder(

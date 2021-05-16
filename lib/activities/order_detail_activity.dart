@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 
-class AccesoGpsPage extends StatefulWidget {
+class OrderDetailActivity extends StatefulWidget {
 
   @override
-  _AccesoGpsPageState createState() => _AccesoGpsPageState();
+  _OrderDetailActivityState createState() => _OrderDetailActivityState();
 }
 
-class _AccesoGpsPageState extends State<AccesoGpsPage> with WidgetsBindingObserver {
+class _OrderDetailActivityState extends State<OrderDetailActivity> with WidgetsBindingObserver {
 
   @override
   void initState() {
-    
+    //tener el estado el widget
     WidgetsBinding.instance.addObserver(this);
     super.initState();
   }
@@ -22,7 +22,7 @@ class _AccesoGpsPageState extends State<AccesoGpsPage> with WidgetsBindingObserv
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
-
+  //obtener el cambio de la aplicacion, cuando es estado sea igual a resumed y la location is granted nos dirreccione a loading
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async{
     
@@ -43,10 +43,12 @@ class _AccesoGpsPageState extends State<AccesoGpsPage> with WidgetsBindingObserv
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Es necesario el GPS para usar esta app'),
+            Text('Orden es: 10302011'),
+            Text('El estado de la orden es:'),
+            Text('La direccion de la orden es: '),
 
             MaterialButton(
-              child: Text('Solicitar Acceso', style: TextStyle( color: Colors.white )),
+              child: Text('Ingresar al mapa', style: TextStyle( color: Colors.white )),
               color: Colors.black,
               shape: StadiumBorder(),
               elevation: 0,
@@ -55,7 +57,7 @@ class _AccesoGpsPageState extends State<AccesoGpsPage> with WidgetsBindingObserv
                 
                 final status = await Permission.location.request();
 
-                this.accesoGPS( status );
+                this.gpsAccess( status );
 
               }
             )
@@ -65,13 +67,16 @@ class _AccesoGpsPageState extends State<AccesoGpsPage> with WidgetsBindingObserv
    );
   }
 
-  void accesoGPS( PermissionStatus status ) {
+  /*
+   * Metodo para validar el estado de la configuracion de gps
+   */
+  void gpsAccess( PermissionStatus status ) {
 
 
     switch ( status ) {
       
       case PermissionStatus.granted:
-        Navigator.pushReplacementNamed(context, 'mapa');
+        Navigator.pushReplacementNamed(context, 'orden');
         break;
         
       case PermissionStatus.undetermined:
