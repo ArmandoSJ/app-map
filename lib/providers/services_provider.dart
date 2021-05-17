@@ -6,33 +6,19 @@ import 'dart:convert';
 
 class ServiceProvider {
 
-  List<UserData> data = [];
+  List<dynamic> data = [];
 
   ServiceProvider() {
    // getData();
   }
 
-  Future<List<UserData>> getData() async {
+  Future<List<dynamic>> getData() async {
 
-    /* 
     
+    final vResponse = await rootBundle.loadString('data/services.json');
     Map dataMap = json.decode( vResponse );
 
-    data = dataMap['services']; */
-    final vResponse = await rootBundle.loadString('data/services.json');
-     Map dataMap = json.decode(vResponse);
-    final List values = dataMap["services"];
-    
-    if ( dataMap == null ) return [];
-
-    if(dataMap != null){
-        values.forEach((element) {
-        final usuTemp = UserData.fromJson(element);
-            data.add( usuTemp );
-        });
-        
-    }
-
+    data = dataMap['services']; 
 
     return data;
   }

@@ -38,14 +38,16 @@ class _OrderDetailActivityState extends State<OrderDetailActivity> with WidgetsB
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
+      resizeToAvoidBottomInset: false ,
+      appBar: AppBar(title: Text("Detalle de servicios")),
+      //resizeToAvoidBottomPadding: false ,
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text('Orden es: 10302011'),
-            Text('El estado de la orden es:'),
-            Text('La direccion de la orden es: '),
+            CardDetail(),
 
             MaterialButton(
               child: Text('Ingresar al mapa', style: TextStyle( color: Colors.white )),
@@ -60,7 +62,8 @@ class _OrderDetailActivityState extends State<OrderDetailActivity> with WidgetsB
                 this.gpsAccess( status );
 
               }
-            )
+            ),
+            ContainerForm(),
           ],
         )
      ),
@@ -86,5 +89,121 @@ class _OrderDetailActivityState extends State<OrderDetailActivity> with WidgetsB
         openAppSettings();
     }
     
+  }
+}
+
+class CardDetail extends StatelessWidget {
+ final textStyle = TextStyle(fontSize: 15.0, color: Colors.black);
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 10.0,
+      shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(20.0) ),
+      child: Column(
+        children: <Widget>[
+          ListTile(
+            //leading: Text(' ', style: textStyle),
+            title: Text('Orden es: 10302011', style: textStyle),
+            subtitle: Text('El estado de la orden es:      \nLa direccion de la orden es:', style: textStyle),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class ContainerForm extends StatelessWidget {
+  final formKey = GlobalKey<FormState>(); 
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+     child: Card(
+       elevation: 10.0,
+       shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(20.0) ),
+       child: Container(
+         padding: EdgeInsets.all(5.0),
+         child: Form(
+           key: formKey,
+           child: Column(
+             children: <Widget>[
+                SafeArea(
+                 child: Container(
+                     height: 45.0,
+                     ),
+               ),
+               SizedBox(height: 3.0),
+              Text('Pregunta 1', style: TextStyle(fontSize: 20.0)),
+              TxtQuestion(),
+              SizedBox(height: 12.0),
+              Text('Pregunta 2', style: TextStyle(fontSize: 20.0)),
+              TxtQuestion(),
+              SizedBox(height: 12.0),
+              Text('Pregunta 3', style: TextStyle(fontSize: 20.0)),
+              TxtQuestion(),
+              SizedBox(height: 12.0),
+              Text('Pregunta 4', style: TextStyle(fontSize: 20.0)),
+              TxtQuestion(),
+              SizedBox(height: 12.0),
+              Text('Pregunta 5', style: TextStyle(fontSize: 20.0)),
+              TxtQuestion(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  FlatButton(
+                    child: Text('Guardar'),
+                    onPressed: () {},
+                  ),
+                  FlatButton(
+                    child: Text('Enviar'),
+                    onPressed: () {},
+                  )
+                ],
+              )         
+             ],
+           ),
+         ),
+       ),
+     ),
+      );
+  }
+}
+
+
+class TxtQuestion extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        padding: EdgeInsets.symmetric(horizontal:20.0), 
+        child: TextFormField(
+                autofocus: true,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(//decora el textfield
+                  border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0)//le da un radio de 20.0 a la caja de texto
+                  ),
+                  hintText: 'Ingrese su respuesta',
+                  //labelText: 'Predio',
+                            //errorText: snapshot.error
+                ),
+                        /* onSaved: (predioValue) => service.vPredio = predioValue,
+                        validator: (predioValue) {
+                          switch (utils.serviceValitaiton(predioValue)) {
+                                case 'E':
+                                  return 'Campo Obligatorio';
+                                break;
+                                case 'L':
+                                  return 'Solo se permiten numeros';
+                                break;
+                                case 'M':
+                                  return 'El predio debe de ser menor a 7 numeros';
+                                case 'T':
+                                  return null;
+                                break;
+                          }
+                          return null;
+                        }, */
+        )
+    );
   }
 }

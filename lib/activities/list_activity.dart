@@ -12,7 +12,7 @@ class ListActivity extends StatelessWidget {
       appBar: AppBar(
         title: Text(constants.LIST_MENU_TITLE),
       ),
-      body: ListOfValues(),
+      body: _lista(),
     );
   }
 
@@ -25,7 +25,7 @@ class ListOfValues extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder(
         future: servicesProvider.getData(),
-        builder: ( BuildContext context, AsyncSnapshot<List<UserData>> snapshot ){
+        builder: ( BuildContext context, AsyncSnapshot<List<dynamic>> snapshot ){
 
             if(snapshot.hasData){
               final vServices = snapshot.data;
@@ -34,7 +34,8 @@ class ListOfValues extends StatelessWidget {
                   separatorBuilder: (context, index) => Divider(),
                   itemBuilder: (contex, i) {
                     //_lstService = vServices;
-                    return SlidableComponent();
+                    //return _lista(vServices[i]["requestid"],  i);
+                    //return SlidableComponent(vServices, i);
                   } 
                 //children: _listaItems( snapshot.data, context ),
               );  
@@ -47,10 +48,71 @@ class ListOfValues extends StatelessWidget {
 }
 
 
-class SlidableComponent extends StatelessWidget {
+Widget _lista() {
+    final servicesProvider = new ServiceProvider();
+    // menuProvider.cargarData()
+    return FutureBuilder(
+      future: servicesProvider.getData(),
+      initialData: [],
+      builder: ( context, AsyncSnapshot<List<dynamic>> snapshot ){
 
-  SlidableComponent({Key key}) : super(key: key);
+        return ListView(
+          children: _listaItems( snapshot.data, context ),
+        );
 
+      },
+    );
+
+  
+
+    
+
+  }
+
+  List<Widget> _listaItems( List<dynamic> data, BuildContext context ) {
+
+    final List<Widget> opciones = [];
+
+
+    data.forEach( (opt) {
+
+      final widgetTemp = ListTile(
+        title: Text( opt['requestid'] ),
+        //leading:  Icon ( Icons.room_service, color: Colors.blue ) ,
+        trailing: TextButton(  
+            child: Text('Relizado'),
+            style: TextButton.styleFrom(
+                   primary: Colors.black,
+                   backgroundColor: Colors.blue.shade200,
+                   textStyle: TextStyle(fontSize: 15),
+                   shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                  ),
+            ),
+            onPressed: () { Navigator.pushNamed(context, "acceso_gps" ); },
+        ),
+      );
+
+      opciones..add( widgetTemp )
+              ..add( Divider() );
+
+    });
+
+    return opciones;
+
+  }
+
+class SlidableComponent extends StatefulWidget {
+  
+  List<dynamic> _lstServices;
+  
+  SlidableComponent(this._lstServices);
+
+  @override
+  _SlidableComponentState createState() => _SlidableComponentState();
+}
+
+class _SlidableComponentState extends State<SlidableComponent> {
   @override
   Widget build(BuildContext context) {
     return Slidable(
@@ -73,16 +135,21 @@ class SlidableComponent extends StatelessWidget {
                 onTap: ()  => {},
               ),
             ],
-          child: ListView(),
+          child: ListApp(widget._lstServices),
     );
   }
 }
 
-class ListApp extends StatelessWidget {
-  UserData userData; 
+class ListApp extends StatefulWidget {
+   List<dynamic> _lstServices;
 
-  ListApp({Key key}) : super(key: key);
+  ListApp(this._lstServices);
 
+  @override
+  _ListAppState createState() => _ListAppState();
+}
+
+class _ListAppState extends State<ListApp> {
   @override
   Widget build(BuildContext context) {
       return ListTile(
@@ -90,8 +157,8 @@ class ListApp extends StatelessWidget {
             horizontal: 6,
             vertical: 0,
           ),
-          title: Text("Request"),
-          subtitle: Text("Action"),
+          title: Text(widget._lstServices[0] + "Request"),
+          subtitle: Text(widget._lstServices[0] + "Action"),
       );
   }
 }

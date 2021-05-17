@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
             const Locale('en', 'US'), // English
             const Locale('es', 'ES'), // Spanish
         ],
-        initialRoute: 'acceso_gps', 
+        initialRoute: 'scroll', 
         routes: getApplicationRoutes(),
         theme: ThemeData(
           primaryColor: Colors.blue.shade100,

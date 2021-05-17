@@ -81,16 +81,16 @@ class FooterUI extends StatelessWidget {
         Text(constants.USER, style: textStyle),
         SizedBox(height: 10.0),
         TextButton(  
-            child: Text('Ingresar'),
+            child: Text('Generar listado'),
             style: TextButton.styleFrom(
                    primary: Colors.black,
                    backgroundColor: Colors.blue.shade200,
-                   textStyle: TextStyle(fontSize: 20),
+                   textStyle: TextStyle(fontSize: 15),
                    shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
                   ),
             ),
-            onPressed: () { Navigator.pushReplacementNamed(context, 'services'); },
+            onPressed: () { Navigator.pushNamed(context, 'services'); },
         ),
       ]                      
     );
